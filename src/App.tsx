@@ -1,43 +1,72 @@
-import { LayoutDashboard, CheckCircle2, DollarSign } from 'lucide-react'
-import { formatCurrency } from './utils/formatters'
-import type { Transaction } from './types'
+import { useState } from 'react';
+import { LayoutDashboard, Plus, Trash2, ArrowUpRight } from 'lucide-react';
+import { Button } from './components/Button';
+import { Input } from './components/Input';
+import { Card } from './components/Card';
+import { formatCurrency } from './utils/formatters';
 
 export function App() {
-  const sampleTransaction: Transaction = {
-    id: '1',
-    title: 'Projeto Freelance',
-    amount: 3500,
-    category: 'Desenvolvimento',
-    type: 'income',
-    createdAt: new Date().toISOString(),
-  }
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const handleSimulateLoad = () => {
+    setLoading(true);
+    setTimeout(() => setLoading(false), 1500);
+  };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col items-center justify-center p-6">
-      <div className="bg-slate-800 p-8 rounded-xl shadow-lg border border-slate-700 max-w-md w-full space-y-4">
-        <div className="flex items-center space-x-3">
-          <LayoutDashboard className="w-8 h-8 text-indigo-400" />
-          <h1 className="text-2xl font-bold">Dashboard Financeiro</h1>
-        </div>
+    <div className="min-h-screen bg-slate-900 text-slate-100 p-8">
+      <div className="max-w-4xl mx-auto space-y-6">
         
-        <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-700 space-y-2">
-          <p className="text-xs text-slate-400 uppercase tracking-wider">Teste de Tipagem e Formatação</p>
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">{sampleTransaction.title}</span>
-            <span className="text-emerald-400 font-bold flex items-center gap-1">
-              <DollarSign className="w-4 h-4" />
-              {formatCurrency(sampleTransaction.amount)}
-            </span>
+        {/* Cabeçalho */}
+        <header className="flex items-center justify-between pb-6 border-b border-slate-800">
+          <div className="flex items-center gap-3">
+            <LayoutDashboard className="w-7 h-7 text-indigo-400" />
+            <h1 className="text-xl font-bold">Design System Base</h1>
           </div>
+          <Button variant="primary" onClick={handleSimulateLoad} isLoading={loading}>
+            <Plus className="w-4 h-4" />
+            Nova Transação
+          </Button>
+        </header>
+
+        {/* Exibição dos Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card>
+            <div className="flex items-center justify-between text-slate-400 mb-2">
+              <span className="text-xs font-semibold uppercase">Entradas</span>
+              <ArrowUpRight className="w-4 h-4 text-emerald-400" />
+            </div>
+            <p className="text-2xl font-bold text-slate-100">{formatCurrency(12450.00)}</p>
+          </Card>
+
+          <Card>
+            <div className="flex items-center justify-between text-slate-400 mb-2">
+              <span className="text-xs font-semibold uppercase">Variantes de Botões</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button variant="secondary" className="text-xs py-1.5 px-3">Secundário</Button>
+              <Button variant="danger" className="text-xs py-1.5 px-3">
+                <Trash2 className="w-3.5 h-3.5" /> Deletar
+              </Button>
+            </div>
+          </Card>
+
+          <Card>
+            <div className="flex items-center justify-between text-slate-400 mb-2">
+              <span className="text-xs font-semibold uppercase">Teste de Input</span>
+            </div>
+            <Input
+              placeholder="Digite para buscar..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </Card>
         </div>
 
-        <div className="flex items-center space-x-2 text-emerald-400 text-sm font-medium">
-          <CheckCircle2 className="w-5 h-5" />
-          <span>Passo 2 concluído: Estrutura & TypeScript integrados</span>
-        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
