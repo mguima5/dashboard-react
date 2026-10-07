@@ -9,7 +9,7 @@ export interface Transaction {
     createdAt: string;
 }
 
-export interface summaryData {
+export interface SummaryData {
     totalIncome: number;
     totalOutcome: number;
     balance: number;
