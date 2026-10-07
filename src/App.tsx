@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Layout } from './components/Layout';
-import { DashboardPage } from './pages/Dashboard';
-import { TransactionsPage } from './pages/Transactions';
-import { SettingsPage } from './pages/Settings';
+import { DashboardPage } from './pages/DashboardPage';
+import { TransactionsPage } from './pages/TransactionsPage';
+import { SettingsPage } from './pages/SettingsPage';
 
 // Instância global do cliente de queries
 const queryClient = new QueryClient({
